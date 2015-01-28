@@ -1,0 +1,17 @@
+ - name: update everything
+   yum:
+     name: "*"
+     state: latest
+   tags:
+     - common
+
+
+ - name: install ansible packages
+   yum:
+     name: "{{ item }}"
+     state: present
+   with_items:
+     - libselinux-python
+     - MySQL-python
+   tags:
+     - common
