@@ -1,0 +1,2 @@
+[webservers]
+192.168.99.99   ansible_ssh_user=vagrant ansible_ssh_key=~/.vagrant.d/insecure_private_key
