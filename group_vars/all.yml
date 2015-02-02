@@ -1,0 +1,3 @@
+build_directory: /home/vagrant/sources
+build_user: vagrant
+build_user_group: vagrant

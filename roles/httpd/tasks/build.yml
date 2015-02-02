@@ -1,0 +1,72 @@
+ - name: install required tools and libraries
+   yum:
+     name: "{{ item }}"
+     state: present
+   with_items:
+     - wget
+     - gcc
+     - pcre-devel
+     - openssl-devel
+   tags:
+     - httpd
+     - build
+
+ - name: download sources
+   get_url:
+     dest: "{{ build_directory }}"
+     url: "{{ item }}"
+   with_items:
+     - "{{ httpd_sources_ftp }}httpd/httpd-{{ httpd_apache_version }}.tar.gz"
+     - "{{ httpd_sources_ftp }}apr/apr-{{ httpd_apr_version }}.tar.gz"
+     - "{{ httpd_sources_ftp }}apr/apr-util-{{ httpd_apr_util_version }}.tar.gz"
+   tags:
+     - httpd
+     - build
+
+
+ - name: unzip downloaded sources
+   unarchive:
+     src: "{{ build_directory }}/{{ item }}"
+     dest: "{{ build_directory }}"
+     owner: "{{ build_user }}"
+     group: "{{ build_user_group }}"
+     copy: no
+     creates: "{{ build_directory }}/{{ item | replace('.tar.gz','') }}"
+   with_items:
+     - "httpd-{{ httpd_apache_version }}.tar.gz"
+     - "apr-{{ httpd_apr_version }}.tar.gz"
+     - "apr-util-{{ httpd_apr_util_version }}.tar.gz"
+   tags:
+     - httpd
+     - build
+
+
+ - name: copy apr to httpd directory
+   command: "cp -r {{ build_directory }}/apr-{{ httpd_apr_version }} {{ build_directory }}/httpd-{{ httpd_apache_version }}/srclib/apr"
+   args:
+     creates: "{{ build_directory }}/httpd-{{ httpd_apache_version }}/srclib/apr"
+   tags:
+     - httpd
+     - build
+
+ - name: copy apr-util to httpd directory
+   command: "cp -r {{ build_directory }}/apr-util-{{ httpd_apr_util_version }} {{ build_directory }}/httpd-{{ httpd_apache_version }}/srclib/apr-util"
+   args:
+     creates: "{{ build_directory }}/httpd-{{ httpd_apache_version }}/srclib/apr-util"
+   tags:
+     - httpd
+     - build
+
+
+ - name: install httpd
+   command: "{{ item }}"
+   args:
+     chdir: "{{ build_directory }}/httpd-{{ httpd_apache_version }}"
+     creates: "{{ httpd_installation_path }}"
+   with_items:
+     - "./configure --enable-ssl  --with-mpm=event --enable-so --with-included-apr --prefix={{ httpd_installation_path }}"
+     - make
+     - make install
+   tags:
+     - httpd
+     - build
