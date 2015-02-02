@@ -29,6 +29,7 @@
 # least PidFile.
 #
 ServerRoot "{{ httpd_installation_path }}"
+PidFile {{ httpd_pid_file }}
 
 #
 # Mutex: Allows you to set the mutex mechanism and mutex file directory

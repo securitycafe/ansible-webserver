@@ -111,16 +111,21 @@
      - configure
 
 
-
- #SETUP LOGROTATE HERE!
-
- - name: add script to /etc/init.d
+ - name: set httpd service script
    template:
-     src: "httpd.j2"
-     dest: "/etc/init.d/httpd"
+     src: service-httpd.j2
+     dest: /etc/init.d/httpd
      owner: root
      group: root
      mode: 0755
+   tags:
+     - httpd
+     - configure
+
+
+ #SETUP LOGROTATE HERE!
+
+
 
 
 
