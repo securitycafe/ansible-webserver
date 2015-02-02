@@ -1,6 +1,24 @@
-#build
+# build
 httpd_sources_ftp: http://ftp.ps.pl/pub/apache//
 httpd_apache_version: 2.4.12
 httpd_apr_version: 1.5.1
 httpd_apr_util_version: 1.5.4
 httpd_installation_path: /usr/local/apache2
+
+# configure
+httpd_group: www
+httpd_user: apache
+httpd_documents_directory: /var/www
+example_domain: example.com
+
+# httpd.conf file
+httpd_port: 80
+httpd_server_name: apache
+
+# mpm
+httpd_mpm_start_servers: 2
+httpd_mpm_min_spare_threads: 2
+httpd_mpm_max_spare_threads: 4
+httpd_mpm_threads_per_child: 30
+httpd_mpm_max_request_workers: 400
+httpd_mpm_max_connections_per_child: 0

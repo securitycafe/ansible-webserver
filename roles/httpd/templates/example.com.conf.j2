@@ -1,0 +1,13 @@
+<VirtualHost *:{{ httpd_port }}>
+
+	ServerName {{ example_domain }}
+
+	DocumentRoot {{ httpd_documents_directory }}/{{ example_domain }}/htdocs
+	<Directory {{ httpd_documents_directory }}/{{ example_domain }}/htdocs>
+	    AllowOverride All
+	 	Require all granted
+	</Directory>
+
+    ErrorLog "{{ httpd_documents_directory }}/{{ example_domain }}/logs/error.log"
+    CustomLog "{{ httpd_documents_directory }}/{{ example_domain }}/logs/access.log" common
+</VirtualHost>

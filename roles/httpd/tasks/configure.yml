@@ -1,0 +1,141 @@
+ - name: create apache group
+   group:
+     name: "{{ httpd_group }}"
+     state: present
+   tags:
+     - httpd
+     - configure
+
+
+ - name: create apache user
+   user:
+     name: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     createhome: no
+     state: present
+   tags:
+     - httpd
+     - configure
+
+
+ - name: change ownership of apache installation
+   file:
+     path: "{{ httpd_installation_path }}"
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     recurse: yes
+   tags:
+     - httpd
+     - configure
+
+
+ - name: create directory structure for example website
+   file:
+     path: "{{ item }}"
+     state: directory
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     mode: 0775
+     recurse: yes
+   with_items:
+     - "{{ httpd_documents_directory }}"
+     - "{{ httpd_documents_directory }}/{{ example_domain }}"
+     - "{{ httpd_documents_directory }}/{{ example_domain }}/htdocs"
+     - "{{ httpd_documents_directory }}/{{ example_domain }}/logs"
+   tags:
+     - httpd
+     - configure
+
+
+ - name: set httpd.conf file
+   template:
+     src: httpd.conf.j2
+     dest: "{{ httpd_installation_path }}/conf/httpd.conf"
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     mode: 0644
+   notify: restart httpd
+   tags:
+     - httpd
+     - configure
+
+
+ - name: set httpd-mpm.conf file
+   template:
+     src: httpd-mpm.conf.j2
+     dest: "{{ httpd_installation_path }}/conf/extra/httpd-mpm.conf"
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     mode: 0644
+   notify: restart httpd
+   tags:
+     - httpd
+     - configure
+
+
+ - name: create vhosts directory
+   file:
+     path: "{{ httpd_installation_path }}/conf/vhosts"
+     state: directory
+     mode: 0775
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+   tags:
+     - httpd
+     - configure
+
+
+ - name: place example vhost in vhosts directory
+   template:
+     src: example.com.conf.j2
+     dest: "{{ httpd_installation_path }}/conf/vhosts/{{ example_domain }}.conf"
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     mode: 0644
+   notify: restart httpd
+   tags:
+     - httpd
+     - configure
+
+
+ - name: set httpd-security.conf file
+   template:
+     src: httpd-security.conf.j2
+     dest: "{{ httpd_installation_path }}/conf/extra/httpd-security.conf"
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     mode: 0644
+   notify: restart httpd
+   tags:
+     - httpd
+     - configure
+
+
+
+ #SETUP LOGROTATE HERE!
+
+ - name: add script to /etc/init.d
+   template:
+     src: "httpd.j2"
+     dest: "/etc/init.d/httpd"
+     owner: root
+     group: root
+     mode: 0755
+
+
+
+
+
+
+
+
+
+
+
+ - name: ensure httpd service is up and running
+   service:
+     name: httpd
+     state: started
+     enabled: yes
+   tags:
+     - test2
