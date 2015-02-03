@@ -3,3 +3,9 @@
 
  # Configure httpd
  - include: configure.yml
+
+ # Additional scripts for httpd
+ - include: scripts.yml
+
+ # setup Virtual Hosts
+ - include: vhosts.yml

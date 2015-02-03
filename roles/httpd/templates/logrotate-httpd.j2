@@ -1,0 +1,12 @@
+{{ httpd_documents_directory }}/*/logs/*.log {
+    rotate {{ httpd_logrotate_rotate_number }}
+    {{ httpd_logrotate_period }}
+    size {{ httpd_logrotate_size }}
+    compress
+    delaycompress
+    sharedscripts
+
+    postrotate
+        service httpd graceful > /dev/null
+    endscript
+}

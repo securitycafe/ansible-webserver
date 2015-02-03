@@ -1,3 +1,4 @@
-build_directory: /home/vagrant/sources
+# build user
 build_user: vagrant
 build_user_group: vagrant
+build_directory: /home/vagrant/sources

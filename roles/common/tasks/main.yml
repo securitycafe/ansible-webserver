@@ -17,7 +17,24 @@
      - common
 
 
- - name: create build directory
+ - name: make sure that build group exists
+   group:
+     name: "{{ build_user_group }}"
+     state: present
+   tags:
+     - common
+
+
+ - name: make sure that build user exists
+   user:
+     name: "{{ build_user }}"
+     group: "{{ build_user_group }}"
+     state: present
+   tags:
+     - common
+
+
+ - name: make sure that build directory exists
    file:
      path: "{{ build_directory }}"
      state: directory

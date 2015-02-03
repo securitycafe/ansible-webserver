@@ -1,0 +1,32 @@
+ - name: set httpd service script
+   template:
+     src: service-httpd.j2
+     dest: /etc/init.d/httpd
+     owner: root
+     group: root
+     mode: 0755
+   tags:
+     - httpd
+     - scripts
+
+
+ - name: set httpd logrotate script
+   template:
+     src: logrotate-httpd.j2
+     dest: /etc/logrotate.d/httpd
+     owner: root
+     group: root
+     mode: 0755
+   tags:
+     - httpd
+     - scripts
+
+
+ - name: ensure httpd service is up and running
+   service:
+     name: httpd
+     state: started
+     enabled: yes
+   tags:
+     - httpd
+     - scripts
