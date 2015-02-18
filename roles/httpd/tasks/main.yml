@@ -4,11 +4,11 @@
  # Install mod_security with OWASP rules
  - include: mod_security.yml
 
+ # Setup Virtual Hosts
+ - include: vhosts.yml
+ 
  # Configure httpd
  - include: configure.yml
 
  # Additional scripts for httpd
  - include: scripts.yml
-
- # Setup Virtual Hosts
- - include: vhosts.yml

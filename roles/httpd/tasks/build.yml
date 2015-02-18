@@ -72,3 +72,23 @@
    tags:
      - httpd
      - build
+     
+     
+ - name: create apache group
+   group:
+     name: "{{ httpd_group }}"
+     state: present
+   tags:
+     - httpd
+     - build
+
+
+ - name: create apache user
+   user:
+     name: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     createhome: no
+     state: present
+   tags:
+     - httpd
+     - build

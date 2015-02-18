@@ -25,7 +25,7 @@
      owner: "{{ build_user }}"
      group: "{{ build_user_group }}"
      copy: no
-     creates: "{{ build_directory }}/{{ item | replace('.tar.gz','') }}"
+     creates: "{{ build_directory }}/modsecurity-{{ httpd_mod_security_version }}"
    tags:
      - httpd
      - mod_security
@@ -55,7 +55,7 @@
      - mod_security
 
 
-- name: download owasp security rules
+ - name: download owasp security rules
    get_url:
      dest: "{{ build_directory }}/owasp.tar.gz"
      url: https://github.com/SpiderLabs/owasp-modsecurity-crs/tarball/master
@@ -70,8 +70,6 @@
      path: "{{ httpd_installation_path }}/conf/crs"
      state: directory
      mode: 0755
-     owner: "{{ httpd_user }}"
-     group: "{{ httpd_group }}"
    tags:
      - httpd
      - mod_security
@@ -93,7 +91,7 @@
    command: cp modsecurity_crs_10_setup.conf.example modsecurity_crs_10_setup.conf
    args:
      chdir: "{{ httpd_owasp_rules_directory }}"
-     creates: "{{ httpd_owasp_rules_directory }}"/modsecurity_crs_10_setup.conf
+     creates: "{{ httpd_owasp_rules_directory }}/modsecurity_crs_10_setup.conf"
    tags:
      - httpd
      - mod_security

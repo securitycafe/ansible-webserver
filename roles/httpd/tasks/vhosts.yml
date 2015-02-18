@@ -53,4 +53,4 @@
      - "{{ httpd_vhosts }}"
    tags:
      - httpd
-     - configure
+     - vhosts

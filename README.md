@@ -15,4 +15,5 @@ Update everything to latest versions and install required packages for CentOS so
 In addition it will create group, user and directory for compiling purposes. 
 
 ### - httpd
-Apache server in latest version (2.4.12) or CentOS. Apache will be build from source and installed in local system. It contains configuration files, basic hardening, logrotate and /etc/init.d script
+Apache server in latest version (2.4.12) or CentOS. Apache will be build from source and installed in local system. It contains configuration files, basic hardening, logrotate and /etc/init.d script. 
+In addition it comes with ModSecurity module and OWASP rules for better security. 

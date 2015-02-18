@@ -1,6 +1,6 @@
 httpd_vhosts:
   - example.com
-  - test.pl
+  - example2.com
 
 # build
 httpd_sources_ftp: http://ftp.ps.pl/pub/apache//

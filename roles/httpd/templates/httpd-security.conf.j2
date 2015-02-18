@@ -13,14 +13,14 @@ LoadModule security2_module modules/mod_security2.so
       SecDataDir /tmp
 
       # Debug log
-      SecDebugLog /var/log/httpd/debug.log
+      SecDebugLog {{ httpd_installation_path }}/logs/modsec_debug.log
       SecDebugLogLevel 3
 
       SecAuditEngine RelevantOnly
       SecAuditLogRelevantStatus ^2-5
       SecAuditLogParts ABCIFHZ
       SecAuditLogType Serial
-      SecAuditLog /var/log/httpd/modsec_audit.log
+      SecAuditLog {{ httpd_installation_path }}/logs/modsec_audit.log
 </IfModule>
 
 <IfModule mod_headers.c>
