@@ -1,13 +1,17 @@
 <VirtualHost *:{{ httpd_port }}>
 
-	ServerName {{ example_domain }}
+	ServerName {{ item }}
 
-	DocumentRoot {{ httpd_documents_directory }}/{{ example_domain }}/htdocs
-	<Directory {{ httpd_documents_directory }}/{{ example_domain }}/htdocs>
+	DocumentRoot {{ httpd_documents_directory }}/{{ item }}/htdocs
+	<Directory {{ httpd_documents_directory }}/{{ item }}/htdocs>
 	    AllowOverride All
 	 	Require all granted
 	</Directory>
 
-    ErrorLog "{{ httpd_documents_directory }}/{{ example_domain }}/logs/error.log"
-    CustomLog "{{ httpd_documents_directory }}/{{ example_domain }}/logs/access.log" common
+	# Logging
+    ErrorLog "{{ httpd_documents_directory }}/{{ item }}/logs/error.log"
+    CustomLog "{{ httpd_documents_directory }}/{{ item }}/logs/access.log" common
+    SecDebugLog "{{ httpd_documents_directory }}/{{ item }}/logs/modsec_debug.log"
+    SecAuditLog "{{ httpd_documents_directory }}/{{ item }}/logs/modsec_audit.log"
+
 </VirtualHost>

@@ -1,0 +1,100 @@
+ - name: install required tools and libraries for mod_security
+   yum:
+     name: "{{ item }}"
+     state: present
+   with_items:
+     - automake
+     - libtool
+     - libxml2-devel
+   tags:
+     - httpd
+     - mod_security
+
+ - name: download sources for mod_security
+   get_url:
+     dest: "{{ build_directory }}"
+     url: "https://www.modsecurity.org/tarball/{{ httpd_mod_security_version }}/modsecurity-{{ httpd_mod_security_version }}.tar.gz"
+   tags:
+     - httpd
+     - mod_security
+
+ - name: unzip downloaded sources and rules for mod_security
+   unarchive:
+     src: "{{ build_directory }}/modsecurity-{{ httpd_mod_security_version }}.tar.gz"
+     dest: "{{ build_directory }}"
+     owner: "{{ build_user }}"
+     group: "{{ build_user_group }}"
+     copy: no
+     creates: "{{ build_directory }}/{{ item | replace('.tar.gz','') }}"
+   tags:
+     - httpd
+     - mod_security
+
+
+ - name: compile mod_security
+   command: "{{ item }}"
+   args:
+     chdir: "{{ build_directory }}/modsecurity-{{ httpd_mod_security_version }}"
+     creates: "{{ httpd_mod_security_installation_path }}"
+   with_items:
+     - ./autogen.sh
+     - "./configure --with-apxs={{ httpd_installation_path }}/bin/apxs --with-apr={{ httpd_installation_path }}/bin/apr-1-config --with-apu={{ httpd_installation_path }}/bin/apu-1-config --prefix={{ httpd_mod_security_installation_path }}"
+     - make
+     - make install
+   tags:
+     - httpd
+     - mod_security
+
+
+ - name: copy mod_security2.so to apache modules directory
+   command: "cp {{ httpd_mod_security_installation_path }}/lib/mod_security2.so {{ httpd_installation_path }}/modules"
+   args:
+     creates: "{{ httpd_installation_path }}/modules/mod_security2.so"
+   tags:
+     - httpd
+     - mod_security
+
+
+- name: download owasp security rules
+   get_url:
+     dest: "{{ build_directory }}/owasp.tar.gz"
+     url: https://github.com/SpiderLabs/owasp-modsecurity-crs/tarball/master
+   tags:
+     - httpd
+     - mod_security
+     - owasp
+
+
+ - name: create owasp directory for rules
+   file:
+     path: "{{ httpd_installation_path }}/conf/crs"
+     state: directory
+     mode: 0755
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+   tags:
+     - httpd
+     - mod_security
+     - owasp
+
+
+ - name: unzip owasp
+   command: "tar -zxvf owasp.tar.gz -C {{ httpd_owasp_rules_directory }} --strip 1"
+   args:
+     chdir: "{{ build_directory }}"
+     creates: "{{ httpd_owasp_rules_directory }}/INSTALL"
+   tags:
+     - httpd
+     - mod_security
+     - owasp
+
+
+ - name: rename configuration file in owasp conf
+   command: cp modsecurity_crs_10_setup.conf.example modsecurity_crs_10_setup.conf
+   args:
+     chdir: "{{ httpd_owasp_rules_directory }}"
+     creates: "{{ httpd_owasp_rules_directory }}"/modsecurity_crs_10_setup.conf
+   tags:
+     - httpd
+     - mod_security
+     - owasp

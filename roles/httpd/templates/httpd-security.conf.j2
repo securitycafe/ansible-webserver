@@ -1,3 +1,28 @@
+LoadModule security2_module modules/mod_security2.so
+
+<IfModule security2_module>
+      Include conf/crs/modsecurity_crs_10_setup.conf
+      Include conf/crs/base_rules/*.conf
+      # Include conf/crs/experimental_rules/*.conf
+      # Include conf/crs/optional_rules/*.conf
+
+      SecRuleEngine On
+      SecRequestBodyAccess On
+      SecResponseBodyAccess On
+      SecResponseBodyMimeType text/plain text/html text/xml application/octet-stream
+      SecDataDir /tmp
+
+      # Debug log
+      SecDebugLog /var/log/httpd/debug.log
+      SecDebugLogLevel 3
+
+      SecAuditEngine RelevantOnly
+      SecAuditLogRelevantStatus ^2-5
+      SecAuditLogParts ABCIFHZ
+      SecAuditLogType Serial
+      SecAuditLog /var/log/httpd/modsec_audit.log
+</IfModule>
+
 <IfModule mod_headers.c>
     Header unset ETag
     Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
