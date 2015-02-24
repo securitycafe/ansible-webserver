@@ -1,0 +1,51 @@
+ - name: install required php packages
+   yum:
+     name: "{{ item }}"
+     state: present
+   with_items:
+     - bzip2-devel
+     - libjpeg-devel
+     - libpng-devel
+     - freetype-devel
+     - libc-client-devel
+     - libmcrypt-devel
+     - libc-client-devel.i686
+   tags:
+     - php
+     - build
+
+
+ - name: download php sources
+   get_url:
+     dest: "{{ build_directory }}/php-{{ php_version}}.tar.gz"
+     url: "{{ php_download_mirror }}"
+   tags:
+     - php
+     - build
+
+
+ - name: unzip php sources
+   unarchive:
+     src: "{{ build_directory }}/php-{{ php_version}}.tar.gz"
+     dest: "{{ build_directory }}"
+     owner: "{{ build_user }}"
+     group: "{{ build_user_group }}"
+     copy: no
+     creates: "{{ build_directory }}/php-{{ php_version}}"
+   tags:
+     - php
+     - build
+
+
+ - name: compile php
+   command: "{{ item }}"
+   args:
+     chdir: "{{ build_directory }}/php-{{ php_version}}"
+     creates: "{{ php_installation_path }}"
+   with_items:
+     - "./configure {{ php_configure_options | join(" ") }}"
+     - make
+     - make install
+   tags:
+     - php
+     - build

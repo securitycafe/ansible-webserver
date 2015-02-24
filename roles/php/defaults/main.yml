@@ -1,0 +1,84 @@
+# Build PHP
+php_download_mirror: "http://pl1.php.net/get/php-{{ php_version }}.tar.gz/from/this/mirror"
+php_version: 5.6.6
+php_installation_path: /usr/local/php
+
+php_configure_options:
+  - --enable-bcmath
+  - --with-bz2
+  - --enable-calendar
+  - --with-curl
+  - --enable-exif
+  - --enable-ftp
+  - --with-gd
+  - --with-jpeg-dir
+  - --with-png-dir
+  - --with-freetype-dir
+  - --enable-gd-native-ttf
+  - --with-imap
+  - --with-imap-ssl
+  - --with-kerberos
+  - --enable-mbstring
+  - --with-mcrypt
+  - --with-mhash
+  - --with-mysql
+  - --with-mysqli
+  - --with-openssl
+  - --with-pcre-regex
+  - --with-pdo-mysql
+  - --with-zlib-dir
+  - --with-regex
+  - --enable-sysvsem
+  - --enable-sysvshm
+  - --enable-sysvmsg
+  - --enable-soap
+  - --enable-sockets
+  - --with-xmlrpc
+  - --enable-zip
+  - --with-zlib
+  - --enable-inline-optimization
+  - --enable-mbregex
+  - --enable-opcache
+  - --enable-fpm
+  - "--prefix={{ php_installation_path }}"
+
+# php-fpm config
+php_fpm_pool_path: "{{ php_installation_path }}/etc/fpm.d"
+php_fpm_pid: /var/run/php-fpm.pid
+php_fpm_pool_user: apache
+php_fpm_pool_group: www
+php_fpm_pm_max_children: 5
+php_fpm_pm_start_servers: 2
+php_fpm_pm_min_spare_servers: 1
+php_fpm_pm_max_spare_servers: 3
+php_fpm_slowlog_timeout: 30s
+php_fpm_display_errors: off
+php_fpm_log_errors: on
+php_fpm_memory_limit: 64M
+
+
+# php.ini config
+php_short_open_tag: On
+php_open_basedir: "{{ websites_directory }}"
+php_disable_functions: exec,passthru,shell_exec,system,proc_open,popen
+php_expose_php: Off
+php_max_execution_time: 30
+php_memory_limit: "{{ php_fpm_memory_limit }}"
+php_error_reporting: E_ALL & ~E_DEPRECATED & ~E_STRICT
+php_display_errors: Off
+php_log_errors: On
+php_display_startup_errors: Off
+php_error_log: /var/log/php_error_log
+php_post_max_size: 8M
+php_upload_max_filesize: 2M
+php_date_timezone: Europe/Warsaw
+
+# OPCache
+php_opcache_enable: 1
+php_opcache_interned_strings_buffer: 16
+php_opcache_fast_shutdown: 1
+#set this to 1 in dev setup, 1 on production
+php_opcache_validate_timestamps: 1
+# to check number of files `find . -type f -print | grep php | wc -l`
+php_opcache_max_accelerated_files: 7000
+php_opcachce_memory_consumption: 128

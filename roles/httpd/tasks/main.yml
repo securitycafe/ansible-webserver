@@ -12,3 +12,12 @@
 
  # Additional scripts for httpd
  - include: scripts.yml
+
+
+ - name: ensure httpd is up and running
+   service:
+     name: httpd
+     state: started
+     enabled: yes
+   tags:
+     - php

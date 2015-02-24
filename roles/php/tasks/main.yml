@@ -1,0 +1,8 @@
+ # Build PHP
+ - include: build.yml
+
+ # /etc/init.d script and alter PATH
+ - include: scripts.yml
+
+ # Configure PHP
+ - include: configure.yml

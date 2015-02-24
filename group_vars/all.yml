@@ -2,3 +2,16 @@
 build_user: vagrant
 build_user_group: vagrant
 build_directory: /home/vagrant/sources
+
+# website directory
+websites_directory: /var/www
+
+# websites
+websites:
+  - example.com
+  - example2.com
+
+
+# Ports will be: 9000, 9001, 9002 etc.
+php_fpm_port_start: 9000
+

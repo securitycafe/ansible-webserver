@@ -1,0 +1,50 @@
+ - name: create fpm.d directory
+   file:
+     path: "{{ php_fpm_pool_path }}"
+     owner: root
+     group: root
+     state: directory
+   tags:
+     - php
+     - configure
+
+
+ - name: create pool for each domain
+   template:
+     src: example.com.conf.j2
+     dest: "{{ php_fpm_pool_path }}/{{ item }}.conf"
+     owner: root
+     group: root
+     mode: 0644
+   notify: restart php
+   with_items:
+     - "{{ websites }}"
+   tags:
+     - php
+     - configure
+
+
+ - name: place php-fpm base configuration file in configuration directory
+   template:
+     src: php-fpm.conf.j2
+     dest: "{{ php_installation_path }}/etc/php-fpm.conf"
+     owner: root
+     group: root
+     mode: 0644
+   notify: restart php
+   tags:
+     - php
+     - configure
+
+
+ - name: place php configuration file in configuration directory
+   template:
+     src: php.ini.j2
+     dest: "{{ php_installation_path }}/lib/php.ini"
+     owner: root
+     group: root
+     mode: 0644
+   notify: restart php
+   tags:
+     - php
+     - configure

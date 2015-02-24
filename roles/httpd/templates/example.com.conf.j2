@@ -2,10 +2,15 @@
 
 	ServerName {{ item }}
 
+	<LocationMatch "^/(.*\.php(/.*)?)$">
+		ProxyPass fcgi://127.0.0.1:{{ php_fpm_port_start + item.index}}{{ httpd_documents_directory }}/{{ item }}/htdocs/$1
+	</LocationMatch>
+
 	DocumentRoot {{ httpd_documents_directory }}/{{ item }}/htdocs
 	<Directory {{ httpd_documents_directory }}/{{ item }}/htdocs>
 	    AllowOverride All
 	 	Require all granted
+	 	php_admin_value open_basedir {{ httpd_documents_directory }}/{{ item }}/htdocs
 	</Directory>
 
 	# Logging

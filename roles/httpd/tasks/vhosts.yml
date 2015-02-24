@@ -19,7 +19,7 @@
      mode: 0775
      recurse: yes
    with_items:
-     - "{{ httpd_vhosts }}"
+     - "{{ websites }}"
    tags:
      - httpd
      - vhosts
@@ -34,7 +34,7 @@
      mode: 0775
      recurse: yes
    with_items:
-     - "{{ httpd_vhosts }}"
+     - "{{ websites }}"
    tags:
      - httpd
      - vhosts
@@ -50,7 +50,7 @@
      mode: 0644
    notify: restart httpd
    with_items:
-     - "{{ httpd_vhosts }}"
+     - "{{ websites }}"
    tags:
      - httpd
      - vhosts

@@ -21,12 +21,3 @@
      - httpd
      - scripts
 
-
- - name: ensure httpd service is up and running
-   service:
-     name: httpd
-     state: started
-     enabled: yes
-   tags:
-     - httpd
-     - scripts
