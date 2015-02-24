@@ -12,12 +12,12 @@
  - name: create pool for each domain
    template:
      src: example.com.conf.j2
-     dest: "{{ php_fpm_pool_path }}/{{ item }}.conf"
+     dest: "{{ php_fpm_pool_path }}/{{ item.1 }}.conf"
      owner: root
      group: root
      mode: 0644
    notify: restart php
-   with_items:
+   with_indexed_items:
      - "{{ websites }}"
    tags:
      - php

@@ -1,22 +1,21 @@
 <VirtualHost *:{{ httpd_port }}>
 
-	ServerName {{ item }}
+	ServerName {{ item.1 }}
 
 	<LocationMatch "^/(.*\.php(/.*)?)$">
-		ProxyPass fcgi://127.0.0.1:{{ php_fpm_port_start + item.index}}{{ httpd_documents_directory }}/{{ item }}/htdocs/$1
+		ProxyPass fcgi://127.0.0.1:{{ ( php_fpm_port_start | int ) + ( item.0 | int )}}{{ httpd_documents_directory }}/{{ item.1 }}/htdocs/$1
 	</LocationMatch>
 
-	DocumentRoot {{ httpd_documents_directory }}/{{ item }}/htdocs
-	<Directory {{ httpd_documents_directory }}/{{ item }}/htdocs>
+	DocumentRoot {{ httpd_documents_directory }}/{{ item.1 }}/htdocs
+	<Directory {{ httpd_documents_directory }}/{{ item.1 }}/htdocs>
 	    AllowOverride All
 	 	Require all granted
-	 	php_admin_value open_basedir {{ httpd_documents_directory }}/{{ item }}/htdocs
 	</Directory>
 
 	# Logging
-    ErrorLog "{{ httpd_documents_directory }}/{{ item }}/logs/error.log"
-    CustomLog "{{ httpd_documents_directory }}/{{ item }}/logs/access.log" common
-    SecDebugLog "{{ httpd_documents_directory }}/{{ item }}/logs/modsec_debug.log"
-    SecAuditLog "{{ httpd_documents_directory }}/{{ item }}/logs/modsec_audit.log"
+    ErrorLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/error.log"
+    CustomLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/access.log" common
+    SecDebugLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/modsec_debug.log"
+    SecAuditLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/modsec_audit.log"
 
 </VirtualHost>

@@ -1,7 +1,7 @@
 ; Start a new pool named 'www'.
 ; the variable $pool can we used in any directive and will be replaced by the
 ; pool name ('www' here)
-[{{ item | replace('.','_')}}]
+[{{ item.1 | replace('.','_')}}]
 
 ; Per pool prefix
 ; It only applies on the following directives:
@@ -35,7 +35,7 @@ group = {{ php_fpm_pool_group }}
 ;                            (IPv6 and IPv4-mapped) on a specific port;
 ;   '/path/to/unix/socket' - to listen on a unix socket.
 ; Note: This value is mandatory.
-listen = 127.0.0.1:{{ php_fpm_port_start + item.index}}
+listen = 127.0.0.1:{{ ( php_fpm_port_start | int ) + ( item.0 | int ) }}
 
 ; Set listen(2) backlog.
 ; Default Value: 65535 (-1 on FreeBSD and OpenBSD)
@@ -409,3 +409,4 @@ php_flag[display_errors] = {{ php_fpm_display_errors }}
 php_admin_value[error_log] = {{ websites_directory }}/{{ item }}/logs/php-fpm.error.log
 php_admin_flag[log_errors] = {{ php_fpm_log_errors }}
 php_admin_value[memory_limit] = {{ php_fpm_memory_limit }}
+php_admin_value[open_basedir] = {{ php_fpm_log_errors }}/{{ item }}/htdocs
