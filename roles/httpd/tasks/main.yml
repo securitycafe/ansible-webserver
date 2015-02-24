@@ -20,4 +20,4 @@
      state: started
      enabled: yes
    tags:
-     - php
+     - httpd

@@ -4,3 +4,4 @@
      - epel
      - common
      - httpd
+     - php

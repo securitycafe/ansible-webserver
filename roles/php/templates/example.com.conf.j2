@@ -312,7 +312,7 @@ pm.max_spare_servers = {{ php_fpm_pm_max_spare_servers }}
 ; The log file for slow requests
 ; Default Value: not set
 ; Note: slowlog is mandatory if request_slowlog_timeout is set
-slowlog = {{ websites_directory }}/{{ item }}/logs/php-fpm.slow.log
+slowlog = {{ websites_directory }}/{{ item.1 }}/logs/php-fpm.slow.log
 
 ; The timeout for serving a single request after which a PHP backtrace will be
 ; dumped to the 'slowlog' file. A value of '0s' means 'off'.
@@ -406,7 +406,7 @@ catch_workers_output = yes
 ;                specified at startup with the -d argument
 ;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
 php_flag[display_errors] = {{ php_fpm_display_errors }}
-php_admin_value[error_log] = {{ websites_directory }}/{{ item }}/logs/php-fpm.error.log
+php_admin_value[error_log] = {{ websites_directory }}/{{ item.1 }}/logs/php-fpm.error.log
 php_admin_flag[log_errors] = {{ php_fpm_log_errors }}
 php_admin_value[memory_limit] = {{ php_fpm_memory_limit }}
-php_admin_value[open_basedir] = {{ php_fpm_log_errors }}/{{ item }}/htdocs
+php_admin_value[open_basedir] = {{ websites_directory }}/{{ item.1 }}/htdocs

@@ -6,3 +6,12 @@
 
  # Configure PHP
  - include: configure.yml
+
+
+ - name: ensure php-fpm is up and running
+   service:
+     name: php-fpm
+     state: started
+     enabled: yes
+   tags:
+     - php
