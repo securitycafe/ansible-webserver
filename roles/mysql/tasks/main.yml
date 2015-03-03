@@ -1,11 +1,11 @@
  # Install MySQL server
  - include: install.yml
 
- # Simulate MySQL secure installation
- - include: mysql_secure_installation.yml
-
  # Configure MySQL
  - include: configure.yml
+
+ # Simulate MySQL secure installation
+ - include: mysql_secure_installation.yml
 
  # Setup users and databases
  - include: users_and_databases.yml

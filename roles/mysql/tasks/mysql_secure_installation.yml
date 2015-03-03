@@ -1,3 +1,12 @@
+ - name: start mysql service
+   service:
+     name: mysqld
+     state: started
+   tags:
+    - mysql
+    - mysql_secure_installation
+
+
  - name: load generated password for root account
    command: "awk 'NR==2' {{ mysql_secret_file }}"
    args:
@@ -7,6 +16,7 @@
     - mysql
     - mysql_secure_installation
 
+
  - name: cerate new password
    command: "mysqladmin -u root '-p{{ mysql_secret_password.stdout }}' password {{ mysql_root_password }}"
    args:
@@ -14,6 +24,19 @@
    tags:
     - mysql
     - mysql_secure_installation
+
+
+ - name: set ~/.my.cnf file for root account
+   template:
+     src: .my.cnf.j2
+     dest: ~/.my.cnf
+     mode: 0600
+     owner: root
+     group: root
+   tags:
+    - mysql
+    - mysql_secure_installation
+
 
  - name: remove .mysql_secret file
    file:
@@ -23,22 +46,8 @@
      - mysql
      - mysql_secure_installation
 
- - name: update mysql root password for all root accounts
-   mysql_user:
-     name: root
-     host: "{{ item }}"
-     password: "{{ mysql_root_password }}"
-   with_items:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
-   tags:
-    - mysql
-    - mysql_secure_installation
 
-
- - name: remove anonymouse users:
+ - name: remove anonymouse users
    mysql_user:
      name: ""
      host: "{{ item }}"
@@ -49,6 +58,7 @@
    tags:
     - mysql
     - mysql_secure_installation
+
 
  - name: remove the test database
    mysql_db:

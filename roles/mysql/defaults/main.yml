@@ -1,6 +1,6 @@
 mysql_repo_url: "http://dev.mysql.com/get/mysql-community-release-el{{ ansible_distribution_major_version }}-5.noarch.rpm"
 mysql_secret_file: /root/.mysql_secret
-mysql_root_password: alamakota
+mysql_root_password: peeRFaY7_7jinN
 
 mysql_port: 3306
 mysql_server_id: 1
@@ -12,4 +12,4 @@ mysql_databases:
 
 
 mysql_users:
- - { name: "example_com", password: "alamakota", host: "localhost", privileges: "example_com.*:ALL" }
+ - { name: "example_com", password: "2%_harlotrY", host: "localhost", privileges: "example_com.*:ALL" }

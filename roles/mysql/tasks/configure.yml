@@ -3,8 +3,8 @@
      path: "{{ mysql_log_directory }}"
      state: directory
      mode: 0775
-     owner: root
-     group: toor
+     owner: mysql
+     group: mysql
    tags:
      - mysql
      - configure
@@ -21,14 +21,3 @@
    tags:
      - mysql
      - configure
-
-
- - name: set ~/.my.cnf file
-   template:
-     src: dot_my.cnf.j2
-     dest: ~/.my.cnf
-     owner: vagrant
-     group: vagrant
-     mode: 0600
-   notify:
-     - restart mysql

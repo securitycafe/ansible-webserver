@@ -11,7 +11,7 @@
  - name: create mysql users
    mysql_user:
      name: "{{ item.name }}"
-     pass: "{{ item.password }}"
+     password: "{{ item.password }}"
      priv: "{{ item.privileges }}"
      state: present
      host: "{{ item.host }}"
