@@ -1,0 +1,59 @@
+ - name: load generated password for root account
+   command: "awk 'NR==2' {{ mysql_secret_file }}"
+   args:
+     removes: "{{ mysql_secret_file }}"
+   register: mysql_secret_password
+   tags:
+    - mysql
+    - mysql_secure_installation
+
+ - name: cerate new password
+   command: "mysqladmin -u root '-p{{ mysql_secret_password.stdout }}' password {{ mysql_root_password }}"
+   args:
+     removes: "{{ mysql_secret_file }}"
+   tags:
+    - mysql
+    - mysql_secure_installation
+
+ - name: remove .mysql_secret file
+   file:
+     path: "{{ mysql_secret_file }}"
+     state: absent
+   tags:
+     - mysql
+     - mysql_secure_installation
+
+ - name: update mysql root password for all root accounts
+   mysql_user:
+     name: root
+     host: "{{ item }}"
+     password: "{{ mysql_root_password }}"
+   with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+   tags:
+    - mysql
+    - mysql_secure_installation
+
+
+ - name: remove anonymouse users:
+   mysql_user:
+     name: ""
+     host: "{{ item }}"
+     state: absent
+   with_items:
+    - localhost
+    - "{{ ansible_hostname }}"
+   tags:
+    - mysql
+    - mysql_secure_installation
+
+ - name: remove the test database
+   mysql_db:
+     name: test
+     state: absent
+   tags:
+    - mysql
+    - mysql_secure_installation

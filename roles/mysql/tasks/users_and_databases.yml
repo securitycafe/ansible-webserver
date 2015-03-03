@@ -1,0 +1,21 @@
+ - name: create mysql databases
+   mysql_db:
+     name: "{{ item }}"
+     state: present
+   with_items: mysql_databases
+   tags:
+     - mysql
+     - users_and_databases
+
+
+ - name: create mysql users
+   mysql_user:
+     name: "{{ item.name }}"
+     pass: "{{ item.password }}"
+     priv: "{{ item.privileges }}"
+     state: present
+     host: "{{ item.host }}"
+   with_items: mysql_users
+   tags:
+    - mysql
+    - users_and_databases

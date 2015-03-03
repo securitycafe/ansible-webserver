@@ -15,3 +15,6 @@ websites:
 # Ports will be: 9000, 9001, 9002 etc.
 php_fpm_port_start: 9000
 
+
+# MySQL socket used in MySQL and PHP
+mysql_socket: /var/lib/mysql/mysql.sock

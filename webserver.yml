@@ -5,3 +5,4 @@
      - common
      - httpd
      - php
+     - mysql

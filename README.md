@@ -5,8 +5,11 @@ The aim of this project is to setup LAMP server for PHP based applications.
 In group_vars/all.yml You will find configuration that is used across all modules. 
 
 **Build user** - username, group and directory. To provided directory ansible will download source files for apache and will compile it there. 
+
 **Website directory** - preferably /var/www directory. All logs, and htdocs will be stored in that directory.
+
 **Websites** - list of websites that will be placed inside website directory. 
+
 **PHP-FPM port** - initial port for FPM pool. Each website has it's own pool.  
 
 ## Roles

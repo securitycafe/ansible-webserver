@@ -1,0 +1,19 @@
+ # Install MySQL server
+ - include: install.yml
+
+ # Simulate MySQL secure installation
+ - include: mysql_secure_installation.yml
+
+ # Configure MySQL
+ - include: configure.yml
+
+ # Setup users and databases
+ - include: users_and_databases.yml
+
+ - name: ensure httpd is up and running
+   service:
+     name: mysqld
+     state: started
+     enabled: yes
+   tags:
+     - mysql

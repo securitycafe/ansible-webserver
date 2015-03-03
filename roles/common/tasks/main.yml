@@ -16,6 +16,16 @@
    tags:
      - common
 
+ - name: install useful system tools
+   yum:
+     name: "{{ item }}"
+     state: present
+   with_items:
+     - yum-utils
+     - wget
+   tags:
+     - common
+
 
  - name: make sure that build group exists
    group:
