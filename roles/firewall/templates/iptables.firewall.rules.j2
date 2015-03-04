@@ -1,0 +1,65 @@
+*filter
+
+# Clear iptables
+-X
+-F
+
+# Block specific IP address
+-A INPUT -s "192.156.72.23" -j DROP
+
+# Allow all loopback (lo0) and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+-A INPUT -d 127.0.0.0/8 -j REJECT
+-A OUTPUT -d 127.0.0.0/8 -j REJECT
+
+#Keep all established connexions
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# Allow incoming HTTP
+-A INPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+
+# Allow incoming HTTPS
+-A INPUT -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+
+# Allow incoming and outgoing SSH
+-A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+
+# Allow ping
+-A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
+
+# Allow DNS
+-A OUTPUT -p udp --dport 53 -j ACCEPT
+-A INPUT -p udp --sport 53 -j ACCEPT
+
+# Allow NTP
+-A OUTPUT -p udp --dport 123 -j ACCEPT
+-A INPUT -p udp --sport 123 -j ACCEPT
+
+# Logging
+-N LOGGING
+-A INPUT -j LOGGING
+-A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables Packet Dropped: " --log-level 7
+-A LOGGING -j DROP
+
+# Allow Yum updates
+-A OUTPUT -p tcp -m tcp -m state --state NEW --dport 80 -j ACCEPT
+
+# Prevent DoS attack
+-A INPUT -p tcp --dport 80 -m limit --limit 50/minute --limit-burst 200 -j ACCEPT
+
+# Drop all other traffic
+-A INPUT -j DROP
+-A FORWARD -j DROP
+-A OUTPUT -j DROP
+
+COMMIT
