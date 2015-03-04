@@ -34,4 +34,4 @@ In group_vars/all.yml You will find configuration that is used across all module
 
 **PHP-FPM port** - initial port for FPM pool. Each website has it's own pool.  
 
-**MySQL socket** - just be sure that PHP will use the same socket as i
+**MySQL socket** - just be sure that PHP will use the same socket as MySQL server 
