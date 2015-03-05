@@ -3,7 +3,7 @@
    roles:
      - epel
      - common
+     - firewall
      - httpd
      - php
      - mysql
-     - firewall
