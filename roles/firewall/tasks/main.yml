@@ -1,4 +1,4 @@
- - name: ensupre iptables are installed
+ - name: ensure iptables are installed
    yum:
      name: iptables
      state: present
@@ -17,7 +17,7 @@
      - firewall
 
 
- - name: place firewall rules scirpt in place
+ - name: place firewall rules script in place
    template:
      src: iptables.firewall.rules.j2
      dest: /etc/iptables.firewall.rules
