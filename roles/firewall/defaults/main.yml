@@ -1,0 +1,27 @@
+# Example ports:
+# :20:21 -> FTP
+# :22    -> SSH
+# :53    -> DNS
+# :80    -> HTTP
+# :123   -> NTP
+# :443   -> HTTPS
+
+
+firewall_allowed_udp_ports:
+ - 123
+ - 53
+
+firewall_incoming_tcp_ports:
+ - 80
+ - 443
+ - 20:21
+ - 22
+
+firewall_outgoing_tcp_ports: "{{ firewall_incoming_tcp_ports }}"
+
+firewall_blocked_ips: []
+
+firewall_additional_rules: []
+
+
+

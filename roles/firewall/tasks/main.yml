@@ -1,0 +1,38 @@
+ - name: ensure iptables are installed
+   yum:
+     name: iptables
+     state: present
+   tags:
+    - firewall
+
+
+ - name: install firewall script
+   template:
+     src: firewall.j2
+     dest: /etc/init.d/firewall
+     owner: root
+     group: root
+     mode: 0755
+   tags:
+     - firewall
+
+
+ - name: place firewall rules script in place
+   template:
+     src: iptables.firewall.rules.j2
+     dest: /etc/iptables.firewall.rules
+     owner: root
+     group: root
+     mode: 0744
+   notify: restart firewall
+   tags:
+    - firewall
+
+
+ - name: ensure the firewall is up and running
+   service:
+     name: firewall
+     state: started
+     enabled: yes
+   tags:
+     - firewall

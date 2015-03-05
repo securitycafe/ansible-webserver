@@ -1,0 +1,72 @@
+*filter
+
+# Clear iptables
+-X
+-F
+
+
+# Allow all loopback (lo0) and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+-A INPUT -d 127.0.0.0/8 -j REJECT
+-A OUTPUT -d 127.0.0.0/8 -j REJECT
+
+
+# Keep all established connections
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+
+# Allow ping
+-A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
+
+# Open UDP ports
+{% for port in firewall_allowed_udp_ports %}
+-A INPUT -p udp --dport {{ port }} -j ACCEPT
+-A OUTPUT -p udp --sport {{ port }} -j ACCEPT
+{% endfor %}
+
+# Open TCP ports for incoming traffic
+{% for port in firewall_incoming_tcp_ports %}
+-A INPUT -p tcp --dport {{ port }} -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport {{ port }} -m state --state ESTABLISHED -j ACCEPT
+{% endfor %}
+
+# Open TCP ports for outgoing traffic
+{% for port in firewall_outgoing_tcp_ports %}
+-A INPUT -p tcp --sport {{ port }} -m state --state ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --dport {{ port }} -m state --state NEW,ESTABLISHED -j ACCEPT
+{% endfor %}
+
+
+# Minimize DoS attack
+-A INPUT -p tcp --dport 80 -m limit --limit 30/minute --limit-burst 200 -j ACCEPT
+
+# Block specific IP addresses
+{% for ip in firewall_blocked_ips %}
+-A INPUT -s "{{ ip }}" -j DROP
+{% endfor %}
+
+# Additional custom rules
+{% for rule in firewall_additional_rules %}
+{{ rule }}
+{% endfor %}
+
+# Log dropped packages
+-N LOGGING
+-A INPUT -j LOGGING
+-A OUTPUT -j LOGGING
+-A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables Packet Dropped: " --log-level 7
+-A LOGGING -j DROP
+
+
+# Drop all other traffic
+-A INPUT -j DROP
+-A FORWARD -j DROP
+-A OUTPUT -j DROP
+
+
+COMMIT

@@ -6,3 +6,4 @@
      - httpd
      - php
      - mysql
+     - firewall
