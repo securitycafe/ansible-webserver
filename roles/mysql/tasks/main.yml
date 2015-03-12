@@ -10,7 +10,7 @@
  # Setup users and databases
  - include: users_and_databases.yml
 
- - name: ensure httpd is up and running
+ - name: ensure mysql is up and running
    service:
      name: mysqld
      state: started

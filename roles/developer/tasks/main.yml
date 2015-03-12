@@ -1,0 +1,8 @@
+ - name: create developer user
+   user:
+     name: developer
+     state: present
+     groups:
+      - wheel
+      - www
+     password: supersecret1234
