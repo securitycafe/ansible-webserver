@@ -1,6 +1,6 @@
 # ansible-webserver
 Playbook for LAMP (Linux, Apache, MySQL, PHP) server. For now works only on CentOS system. 
-It will install latest Apache (2.4.12), PHP (5.6.6) and MySQL Community server (5.7)
+It will install latest Apache (2.4.12), PHP (5.6.6) and MySQL Community server (5.7.6)
 
 For more details and installation instructions: http://blog.astaz3l.com/2014/05/19/setup-vps-server/
 
@@ -23,7 +23,7 @@ In addition it comes with ModSecurity module and OWASP rules for better security
 PHP in latest version (5.6.6). PHP will be build from source. It contains configuration files, PHP-FPM setup, OPCache setup, basic hardening and /etc/init.d script.
 
 ### - mysql
-Install MySQL community server in latest version (5.7). It will be installed from official MySQL repository. Contains configuration files and basic hardening. 
+Install MySQL community server in latest version (5.7.6). It will be installed from official MySQL repository. Contains configuration files and basic hardening. 
 
 
 ## Variables
@@ -38,3 +38,5 @@ In group_vars/all.yml You will find configuration that is used across all module
 **PHP-FPM port** - initial port for FPM pool. Each website has it's own pool.  
 
 **MySQL socket** - just be sure that PHP will use the same socket as MySQL server 
+
+**WWW group** - this is the group for apache and developer. So they can modify the files without permission denied. 

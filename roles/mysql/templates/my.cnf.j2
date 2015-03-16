@@ -24,14 +24,6 @@ sysdate-is-now                  = 1
 innodb-strict-mode              = 1
 symbolic-links		            = 0
 
-# DATA STORAGE #
-datadir                         = {{ mysql_datadir }}
-
-# BINARY LOGGING #
-log-bin                         = {{ mysql_log_directory }}/mysql-bin.log
-expire-logs-days                = 14
-sync-binlog                     = 1
-
 # CACHES AND LIMITS #
 tmp-table-size                  = 32M
 max-heap-table-size             = 32M

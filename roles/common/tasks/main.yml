@@ -53,3 +53,11 @@
      group: "{{ build_user_group }}"
    tags:
      - common
+
+
+ - name: make sure that www group exists
+   group:
+     name: "{{ www_group }}"
+     state: present
+   tags:
+     - common

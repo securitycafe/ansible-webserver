@@ -7,20 +7,13 @@
     - mysql_secure_installation
 
 
- - name: load generated password for root account
-   command: "awk 'NR==2' {{ mysql_secret_file }}"
+ - name: cerate new password for root user
+   command: {{ item }}
+   with_items:
+    - "mysqladmin -u root password {{ mysql_root_password }}"
+    - "touch "{{ mysql_data_directory }}/.mysql-root-password-has-been-set-by-ansible"
    args:
-     removes: "{{ mysql_secret_file }}"
-   register: mysql_secret_password
-   tags:
-    - mysql
-    - mysql_secure_installation
-
-
- - name: cerate new password
-   command: "mysqladmin -u root '-p{{ mysql_secret_password.stdout }}' password {{ mysql_root_password }}"
-   args:
-     removes: "{{ mysql_secret_file }}"
+     creates: "{{ mysql_data_directory }}/.mysql-root-password-has-been-set-by-ansible"
    tags:
     - mysql
     - mysql_secure_installation
@@ -38,16 +31,19 @@
     - mysql_secure_installation
 
 
- - name: remove .mysql_secret file
-   file:
-     path: "{{ mysql_secret_file }}"
-     state: absent
+ - name: set ~/.my.cnf file for developer account
+   template:
+     src: .my.cnf.j2
+     dest: "/home/{{ developer_user }}/.my.cnf"
+     mode: 0600
+     owner: "{{ developer_user }}"
+     group: "{{ developer_user }}"
    tags:
-     - mysql
-     - mysql_secure_installation
+    - mysql
+    - mysql_secure_installation
 
 
- - name: remove anonymouse users
+ - name: remove anonymous users
    mysql_user:
      name: ""
      host: "{{ item }}"

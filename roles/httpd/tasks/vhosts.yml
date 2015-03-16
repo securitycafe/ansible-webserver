@@ -57,8 +57,8 @@
 
  - name: place symlinks to websites in developer account home directory
    file:
-     src: "/home/{{ developer_user }}/{{ item }}"
-     dest: "{{ httpd_documents_directory }}/{{ item }}"
+     src: "{{ httpd_documents_directory }}/{{ item }}"
+     dest: "/home/{{ developer_user }}/{{ item }}"
      owner: "{{ developer_user }}"
      group: "{{ developer_user }}"
      state: link

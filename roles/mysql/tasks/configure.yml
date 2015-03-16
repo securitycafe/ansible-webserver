@@ -1,21 +1,40 @@
- - name: create mysql log directory exists
+ - name: make sure that mysql log directory exists
    file:
      path: "{{ mysql_log_directory }}"
      state: directory
      mode: 0775
-     owner: mysql
-     group: mysql
+     owner: "{{ mysql_user }}"
+     group: "{{ mysql_user }}"
    tags:
      - mysql
      - configure
+
+ - name: initialize database
+   command: mysqld --initialize-insecure
+   args:
+     chkdir: "{{ mysql_data_directory }}"
+     creates: "{{ mysql_data_directory }}/mysql"
+   tags:
+    - mysql
+    - configure
+
+ - name: set ownershif of mysql files
+   file:
+     path: "{{ mysql_data_directory }}"
+     owner: "{{ mysql_user }}"
+     group: "{{ mysql_user }}"
+     recurse: yes
+   tags:
+    - mysql
+    - configure
 
 
  - name: set my.cnf file
    template:
      src: my.cnf.j2
      dest: /etc/my.cnf
-     owner: root
-     group: root
+     owner: "{{ mysql_user }}"
+     group: "{{ mysql_user }}"
      mode: 0644
    notify: restart mysql
    tags:
