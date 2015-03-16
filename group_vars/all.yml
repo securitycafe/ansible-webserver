@@ -3,6 +3,12 @@ build_user: vagrant
 build_user_group: vagrant
 build_directory: /home/vagrant/sources
 
+# developer user
+developer_user: developer
+
+# www group
+www_group: www
+
 # website directory
 websites_directory: /var/www
 

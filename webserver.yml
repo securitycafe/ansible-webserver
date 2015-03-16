@@ -3,8 +3,8 @@
    roles:
      - epel
      - common
+     - developer
      - firewall
      - httpd
      - php
      - mysql
-     - developer

@@ -1,8 +1,34 @@
+ - name: enable wheel group
+   lineinfile: "dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) NOPASSWD: ALL'"
+   tags:
+    - developer
+
  - name: create developer user
    user:
-     name: developer
+     name: "{{ developer_user }}"
      state: present
-     groups:
-      - wheel
-      - www
-     password: supersecret1234
+     groups: "wheel,{{ www_group }}"
+     append: true
+     password: "{{ developer_password }}"
+   tags:
+    - developer
+
+
+ - name: add public key to server
+   authorized_key:
+     user: developer
+     key: "{{ developer_key }}"
+   tags:
+    - developer
+
+
+ - name: place readme.txt file with basic information about machine in user home directory
+   template:
+     src: readme.txt.j2
+     dest: "/home/{{ developer_user }}/readme.txt"
+     owner: "{{ developer_user }}"
+     group: "{{ developer_user }}"
+     mode: 0600
+   tags:
+    - developer
+   

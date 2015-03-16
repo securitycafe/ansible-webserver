@@ -40,7 +40,6 @@
      - vhosts
 
 
-
  - name: place vhost file in vhosts directory
    template:
      src: example.com.conf.j2
@@ -54,3 +53,17 @@
    tags:
      - httpd
      - vhosts
+
+
+ - name: place symlinks to websites in developer account home directory
+   file:
+     src: "/home/{{ developer_user }}/{{ item }}"
+     dest: "{{ httpd_documents_directory }}/{{ item }}"
+     owner: "{{ developer_user }}"
+     group: "{{ developer_user }}"
+     state: link
+   with_items:
+     - "{{ websites }}"
+   tags:
+    - httpd
+    - vhosts

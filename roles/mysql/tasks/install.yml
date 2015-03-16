@@ -21,7 +21,7 @@
 
  - name: install mysql server
    yum:
-     name: mysql-community-server
+     name: "mysql-community-server-{{ mysql_version }}"
      state: present
    tags:
     - mysql

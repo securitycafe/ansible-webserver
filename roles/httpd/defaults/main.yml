@@ -6,7 +6,7 @@ httpd_apr_util_version: 1.5.4
 httpd_installation_path: /usr/local/apache2
 
 # configure
-httpd_group: www
+httpd_group: "{{ www_group }}"
 httpd_user: apache
 httpd_pid_file: /var/run/httpd.pid
 httpd_documents_directory: "{{ websites_directory }}"

@@ -1,0 +1,47 @@
+Hello {{ developer_user }}!
+
+You are logged in to machine that was provisioned by Ansible.
+It contains basic setup and software installed for simple webserver.
+
+Here are some informations that might be useful to You:
+
+=== FIREWALL ===
+List of firewall rules: /etc/iptables.firewall.rules
+Restart firewall: sudo service firewall restart
+
+
+
+=== HTTPD ===
+HTTPD (Apache) version: {{ httpd_apache_version }}
+ModSecurity is installed as httpd extension
+
+Important configuration files:
+ - {{ httpd_installation_path }}/conf/httpd.conf
+ - {{ httpd_installation_path }}/conf/extra/httpd-mpm.conf
+ - {{ httpd_installation_path }}/conf/extra/httpd-security.conf
+
+Virtual Hosts list: {{ httpd_installation_path }}/conf/vhosts/
+Location for website files: {{ httpd_documents_directory }}
+Restart httpd: sudo service httpd restart
+
+
+
+=== MYSQL ===
+MySQL version:  {{ mysql_version }}
+Configuration file: /etc/my.cnf
+Log directory: {{ mysql_log_directory }}
+Password for root is included in ~/.my.cnf file
+Restart MySQL: sudo service mysqld restart
+
+
+
+=== PHP ===
+PHP version: {{ php_version }}
+PHP is running in FPM mode
+Pool directory for FPM: {{ php_fpm_pool_path }}
+
+Important configuration files:
+ - {{ php_installation_path }}/etc/php-fpm.conf
+ - {{ php_installation_path }}/lib/php.ini
+
+Restart PHP-FPM: sudo service php-fpm restart
