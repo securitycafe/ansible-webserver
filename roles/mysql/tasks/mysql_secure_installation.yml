@@ -7,11 +7,11 @@
     - mysql_secure_installation
 
 
- - name: cerate new password for root user
-   command: {{ item }}
+ - name: create new password for root user
+   command: "{{ item }}"
    with_items:
     - "mysqladmin -u root password {{ mysql_root_password }}"
-    - "touch "{{ mysql_data_directory }}/.mysql-root-password-has-been-set-by-ansible"
+    - "touch {{ mysql_data_directory }}/.mysql-root-password-has-been-set-by-ansible"
    args:
      creates: "{{ mysql_data_directory }}/.mysql-root-password-has-been-set-by-ansible"
    tags:

@@ -7,6 +7,9 @@
      - mysql
      - users_and_databases
 
+ - stat:
+     path: "{{ mysql_data_directory }}/.mysql-users-has-been-set-by-ansible"
+   register: mysql_users_exists
 
  - name: create mysql users
    mysql_user:
@@ -16,6 +19,14 @@
      state: present
      host: "{{ item.host }}"
    with_items: mysql_users
+   when:
+     mysql_users_exists.stat.exists == true
    tags:
     - mysql
     - users_and_databases
+
+# fix for: https://github.com/ansible/ansible/issues/10482
+ - name: set flat for created users
+   command: "touch {{ mysql_data_directory }}/.mysql-users-has-been-set-by-ansible"
+   args:
+     creates: "{{ mysql_data_directory }}/.mysql-users-has-been-set-by-ansible"

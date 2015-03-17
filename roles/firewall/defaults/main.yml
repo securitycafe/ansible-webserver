@@ -14,7 +14,7 @@ firewall_allowed_udp_ports:
 firewall_incoming_tcp_ports:
  - 80
  - 443
- - 20:21
+ - "20:21"
  - 22
 
 firewall_outgoing_tcp_ports: "{{ firewall_incoming_tcp_ports }}"
