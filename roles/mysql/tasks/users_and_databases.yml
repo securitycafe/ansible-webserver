@@ -20,13 +20,13 @@
      host: "{{ item.host }}"
    with_items: mysql_users
    when:
-     mysql_users_exists.stat.exists == true
+     mysql_users_exists.stat.exists == false
    tags:
     - mysql
     - users_and_databases
 
 # fix for: https://github.com/ansible/ansible/issues/10482
- - name: set flat for created users
+ - name: set flag file for created users
    command: "touch {{ mysql_data_directory }}/.mysql-users-has-been-set-by-ansible"
    args:
      creates: "{{ mysql_data_directory }}/.mysql-users-has-been-set-by-ansible"
