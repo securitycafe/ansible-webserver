@@ -5,6 +5,7 @@
      - common
      - developer
      - firewall
+     - ssh
      - httpd
      - php
      - mysql
