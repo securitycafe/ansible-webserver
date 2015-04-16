@@ -12,7 +12,7 @@
  - name: initialize database
    command: mysqld --initialize-insecure
    args:
-     chkdir: "{{ mysql_data_directory }}"
+     chdir: "{{ mysql_data_directory }}"
      creates: "{{ mysql_data_directory }}/mysql"
    tags:
     - mysql

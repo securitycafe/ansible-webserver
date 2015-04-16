@@ -43,3 +43,5 @@ In group_vars/all.yml You will find configuration that is used across all module
 **MySQL socket** - just be sure that PHP will use the same socket as MySQL server 
 
 **WWW group** - this is the group for apache and developer. So they can modify the files without permission denied. 
+
+**SSH port** - port for SSH
