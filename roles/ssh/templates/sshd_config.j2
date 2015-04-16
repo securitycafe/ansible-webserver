@@ -40,12 +40,12 @@ LogLevel INFO
 
 #LoginGraceTime 2m
 PermitRootLogin {{ ssh_permit_root_login }}
-StrictModes yes
+StrictModes {{ ssh_strict_modes }}
 #MaxAuthTries 6
 #MaxSessions 10
 
-#RSAAuthentication yes
-#PubkeyAuthentication yes
+RSAAuthentication yes
+PubkeyAuthentication yes
 #AuthorizedKeysFile	.ssh/authorized_keys
 #AuthorizedKeysCommand none
 #AuthorizedKeysCommandRunAs nobody
@@ -78,7 +78,7 @@ ChallengeResponseAuthentication no
 
 # GSSAPI options
 #GSSAPIAuthentication no
-GSSAPIAuthentication yes
+GSSAPIAuthentication no
 #GSSAPICleanupCredentials yes
 GSSAPICleanupCredentials yes
 #GSSAPIStrictAcceptorCheck yes

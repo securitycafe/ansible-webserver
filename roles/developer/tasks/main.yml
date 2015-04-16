@@ -16,7 +16,7 @@
 
  - name: add public key to server
    authorized_key:
-     user: developer
+     user: "{{ developer_user }}"
      key: "{{ developer_key }}"
    tags:
     - developer
