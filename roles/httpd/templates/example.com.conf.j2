@@ -10,6 +10,7 @@
 	<Directory {{ httpd_documents_directory }}/{{ item.1 }}/htdocs>
 	    AllowOverride All
 	 	Require all granted
+	 	Options +FollowSymLinks
 	</Directory>
 
 	# Logging
