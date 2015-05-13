@@ -1,7 +1,7 @@
 # build
 httpd_sources_ftp: http://ftp.ps.pl/pub/apache//
 httpd_apache_version: 2.4.12
-httpd_apr_version: 1.5.1
+httpd_apr_version: 1.5.2
 httpd_apr_util_version: 1.5.4
 httpd_installation_path: /usr/local/apache2
 
