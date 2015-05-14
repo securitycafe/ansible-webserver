@@ -409,4 +409,4 @@ php_flag[display_errors] = {{ php_fpm_display_errors }}
 php_admin_value[error_log] = {{ websites_directory }}/{{ item.1 }}/logs/php-fpm.error.log
 php_admin_flag[log_errors] = {{ php_fpm_log_errors }}
 php_admin_value[memory_limit] = {{ php_fpm_memory_limit }}
-php_admin_value[open_basedir] = {{ websites_directory }}/{{ item.1 }}/htdocs
+php_admin_value[open_basedir] = {{ websites_directory }}/{{ item.1 }}/htdocs:/tmp
