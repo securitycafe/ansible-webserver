@@ -16,7 +16,11 @@
 	# Logging
     ErrorLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/error.log"
     CustomLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/access.log" common
-    SecDebugLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/modsec_debug.log"
-    SecAuditLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/modsec_audit.log"
+
+    <IfModule security2_module>
+        SecDebugLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/modsec_debug.log"
+        SecAuditLog "{{ httpd_documents_directory }}/{{ item.1 }}/logs/modsec_audit.log"
+    </IfModule>
+
 
 </VirtualHost>
