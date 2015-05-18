@@ -59,7 +59,6 @@ php_fpm_memory_limit: 64M
 
 # php.ini config
 php_short_open_tag: On
-php_open_basedir: "{{ websites_directory }}"
 php_disable_functions: exec,passthru,shell_exec,system,proc_open,popen
 php_expose_php: Off
 php_max_execution_time: 30
