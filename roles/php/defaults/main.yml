@@ -1,6 +1,6 @@
 # Build PHP
 php_download_mirror: "http://pl1.php.net/get/php-{{ php_version }}.tar.gz/from/this/mirror"
-php_version: 5.6.7
+php_version: 5.6.9
 php_installation_path: /usr/local/php
 
 php_configure_options:
