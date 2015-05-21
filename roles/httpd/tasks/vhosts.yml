@@ -16,7 +16,7 @@
      state: directory
      owner: "{{ httpd_user }}"
      group: "{{ httpd_group }}"
-     mode: 0775
+     mode: 2775
      recurse: yes
    with_items:
      - "{{ websites }}"
