@@ -463,6 +463,9 @@ Include conf/extra/httpd-mpm.conf
 # Real-time info on requests and configuration
 #Include conf/extra/httpd-info.conf
 
+# Security rules
+Include conf/extra/httpd-security.conf
+
 # Virtual hosts
 #Include conf/extra/httpd-vhosts.conf
 Include conf/vhosts/*.conf
@@ -475,9 +478,6 @@ Include conf/vhosts/*.conf
 
 # Various default settings
 #Include conf/extra/httpd-default.conf
-
-# Security rules
-Include conf/extra/httpd-security.conf
 
 # Configure mod_proxy_html to understand HTML4/XHTML1
 <IfModule proxy_html_module>
