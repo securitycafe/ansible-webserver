@@ -2,7 +2,7 @@
    file:
      path: "{{ httpd_installation_path }}/conf/vhosts"
      state: directory
-     mode: 0775
+     mode: u=rwX,g=rwX,o=rX
      owner: "{{ httpd_user }}"
      group: "{{ httpd_group }}"
    tags:
@@ -16,7 +16,7 @@
      state: directory
      owner: "{{ httpd_user }}"
      group: "{{ httpd_group }}"
-     mode: 2775
+     mode: u=rwX,g=rwX,o=rX
      recurse: yes
    with_items:
      - "{{ websites }}"
@@ -31,7 +31,7 @@
      state: directory
      owner: "{{ httpd_user }}"
      group: "{{ httpd_group }}"
-     mode: 0775
+     mode: u=rwX,g=rwX,o=rX
      recurse: yes
    with_items:
      - "{{ websites }}"
