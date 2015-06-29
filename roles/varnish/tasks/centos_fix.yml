@@ -1,0 +1,37 @@
+ - name: install audit2allow tool
+   yum:
+     name: policycoreutils-python
+     state: present
+   tags:
+    - varnish
+    - centos_fix
+
+
+
+ - name: make varnish scripts directory
+   file:
+     path: "{{ varnish_fix_directory }}"
+     state: directory
+     owner: "{{ build_user }}"
+     group: "{{ build_group }}"
+     mode: u=rwX,g=rwX,o=rX
+   tags:
+     - varnish
+     - centos_fix
+
+ - name: place fix script in varnish fix directory
+   template:
+     src: centos_fix_script.sh.j2
+     dest: "{{ varnish_fix_directory }}/centos_fix_script.sh"
+     owner: "{{ build_user }}"
+     group: "{{ build_group }}"
+     mode: u=rwX,g=rX,o=rX
+   tags:
+     - varnish
+     - centos_fix
+
+ - name: update selinux policies
+   command: "{{ varnish_fix_directory }}/centos_fix_script.sh"
+   args:
+     chdir: "{{ varnish_fix_directory }}"
+     creates: "{{ varnish_fix_directory }}/varnishd3.pp"

@@ -1,0 +1,16 @@
+ # Install varnish
+ - include: install.yml
+
+ # Install mod_security with OWASP rules
+ - include: centos_fix.yml
+
+ # Configure httpd
+ - include: configure.yml
+
+ - name: ensure varnish is up and running
+   service:
+     name: varnish
+     state: started
+     enabled: yes
+   tags:
+     - varnish

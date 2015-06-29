@@ -96,3 +96,15 @@
      - httpd
      - mod_security
      - owasp
+
+
+ - name: add PURGE requests to allowed requests
+   lineinfile:
+     dest: "{{ httpd_owasp_rules_directory }}/modsecurity_crs_10_setup.conf"
+     regexp: "tx\.allowed_methods=GET HEAD POST OPTIONS"
+     insertafter: " PURGE"
+   tags:
+    - httpd
+    - mod_security
+    - owasp
+    - varnish

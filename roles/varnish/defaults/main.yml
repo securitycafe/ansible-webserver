@@ -1,0 +1,22 @@
+varnish_rpm: https://repo.varnish-cache.org/redhat/varnish-4.0.el6.rpm
+varnish_version: 4.0.3
+
+varnish_fix_directory: "{{ build_directory }}/varnish"
+
+#varnish config
+varnish_nfiles: 131072
+varnish_log_size: 82000
+varnish_vcl_file: /etc/varnish/default.vcl
+varnish_port: 80
+varnish_min_threads: 50
+varnish_max_threads: 1000
+varnish_thread_timeout:120
+varnish_storage_size: 256M
+varnish_ttl: 120
+varnish_storage_type: malloc
+
+#varnish VCL
+varnish_default_backend_host: 127.0.0.1
+varnish_default_backend_port: 81
+varnish_acl_purge_list:
+ - localhost

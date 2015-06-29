@@ -13,7 +13,7 @@ httpd_documents_directory: "{{ websites_directory }}"
 example_domain: example.com
 
 # httpd.conf file
-httpd_port: 80
+httpd_port: 81
 httpd_server_name: apache
 
 # mpm

@@ -21,6 +21,9 @@ LoadModule security2_module modules/mod_security2.so
       SecAuditLogParts ABCIFHZ
       SecAuditLogType Serial
       SecAuditLog {{ httpd_installation_path }}/logs/modsec_audit.log
+
+      # Fix for Varnish
+      SecRuleRemoveById 960020
 </IfModule>
 
 <IfModule mod_headers.c>

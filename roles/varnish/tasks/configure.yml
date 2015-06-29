@@ -1,0 +1,23 @@
+ - name: set varnish config file
+   template:
+     src: varnish.j2
+     dest: /etc/sysconfig/varnish
+     owner: "{{ developer_user }}"
+     group: "{{ developer_user }}"
+     mode: 0644
+   notify: restart varnish
+   tags:
+     - varnish
+     - configure
+
+ - name: set default.vcl file
+   template:
+     src: default.vcl.j2
+     dest: "{{ varnish_vcl_file }}"
+     owner: "{{ developer_user }}"
+     group: "{{ developer_user }}"
+     mode: 0644
+   notify: restart varnish
+   tags:
+     - varnish
+     - configure
