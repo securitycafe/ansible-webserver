@@ -1,6 +1,6 @@
  - name: import varnish key
-   rpm_key:
-     key: "{{ varnish_rpm }}"
+   yum:
+     name: "{{ varnish_rpm }}"
      state: present
    tags:
      - varnish

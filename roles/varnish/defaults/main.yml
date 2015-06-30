@@ -10,7 +10,7 @@ varnish_vcl_file: /etc/varnish/default.vcl
 varnish_port: 80
 varnish_min_threads: 50
 varnish_max_threads: 1000
-varnish_thread_timeout:120
+varnish_thread_timeout: 120
 varnish_storage_size: 256M
 varnish_ttl: 120
 varnish_storage_type: malloc

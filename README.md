@@ -1,6 +1,6 @@
 # ansible-webserver
 Playbook for LAMP (Linux, Apache, MySQL, PHP) server. For now works only on CentOS 6.6 system. 
-It will install latest Apache (2.4.12), PHP (5.6.9) and MySQL Community server (5.7.7)
+It will install latest Apache (2.4.12), PHP (5.6.10), MySQL Community server (5.7.7) and Varnish Cache (4.0.3)
 
 For more details and installation instructions: http://blog.astaz3l.com/2014/05/19/setup-vps-server/
 
@@ -26,7 +26,10 @@ In addition it comes with ModSecurity module and OWASP rules for better security
 PHP in latest version (5.6.9). PHP will be build from source. It contains configuration files, PHP-FPM setup, OPCache setup, basic hardening and /etc/init.d script.
 
 ### - mysql
-Install MySQL community server in latest version (5.7.7). It will be installed from official MySQL repository. Contains configuration files and basic hardening. 
+Install MySQL community server in latest version (5.7.7). It will be installed from official MySQL repository. Contains configuration files and basic hardening.
+ 
+### - varnish
+Install Varnish in latest version. Contains configuration and basic setup including fix for CentOS 6.6
 
 
 ## Variables

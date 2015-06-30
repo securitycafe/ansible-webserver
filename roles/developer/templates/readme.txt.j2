@@ -3,7 +3,7 @@ Hello {{ developer_user }}!
 You are logged in to machine that was provisioned by Ansible.
 It contains basic setup and software installed for simple webserver.
 
-Here are some informations that might be useful to You:
+Here are some informations that might be useful to you:
 
 === FIREWALL ===
 List of firewall rules: /etc/iptables.firewall.rules
@@ -45,3 +45,16 @@ Important configuration files:
  - {{ php_installation_path }}/lib/php.ini
 
 Restart PHP-FPM: sudo service php-fpm restart
+
+
+=== VARNISH ===
+Varnish cache is up and running on this system.
+Varnish version: {{ varnish_version }}
+
+Important configuration files:
+ - /etc/varnish/default.vcl
+ - /etc/sysconfig/varnish
+
+Restart Varnish: sudo service varnish restart
+
+Clear Varnish cache: sudo varnishadm ban 'req.http.host == "example.com" && req.url ~ "REGULAR_EXPRESSION"'
