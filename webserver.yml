@@ -9,3 +9,4 @@
      - httpd
      - php
      - mysql
+     - varnish
