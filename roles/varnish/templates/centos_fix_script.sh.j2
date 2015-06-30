@@ -1,4 +1,6 @@
+service varnish start
 grep varnishd /var/log/audit/audit.log | audit2allow -M varnishd2
 semodule -i varnishd2.pp
+service varnish start
 grep varnishd /var/log/audit/audit.log | audit2allow -M varnishd3
 semodule -i varnishd3.pp
