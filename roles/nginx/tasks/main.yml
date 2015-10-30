@@ -1,0 +1,5 @@
+ # Build nginx
+ - include: build.yml
+
+ # Configure nginx
+ - include: configure.yml

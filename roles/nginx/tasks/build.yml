@@ -1,0 +1,33 @@
+ - name: download nginx source
+   get_url:
+     dest: "{{ build_directory }}"
+     url: "http://nginx.org/download/nginx-{{ nginx_version }}.tar.gz"
+   tags:
+     - nginx
+     - build
+
+ - name: unzip downloaded sources
+   unarchive:
+     src: "{{ build_directory }}/nginx-{{ nginx_version }}.tar.gz"
+     dest: "{{ build_directory }}"
+     owner: "{{ build_user }}"
+     group: "{{ build_user_group }}"
+     copy: no
+     creates: "{{ build_directory }}/nginx-{{ nginx_version }}"
+   tags:
+     - nginx
+     - build
+
+
+ - name: compile nginx
+   command: "{{ item }}"
+   args:
+     chdir: "{{ build_directory }}/nginx-{{ nginx_version}}"
+     creates: "{{ nginx_installation_path }}"
+   with_items:
+     - "./configure {{ nginx_configure_options | join(' ') }}"
+     - make
+     - make install
+   tags:
+     - nginx
+     - build

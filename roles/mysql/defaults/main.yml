@@ -1,5 +1,5 @@
 mysql_repo_url: "http://dev.mysql.com/get/mysql-community-release-el{{ ansible_distribution_major_version }}-5.noarch.rpm"
-mysql_version: 5.7.7
+mysql_version: 5.7.8
 mysql_root_password: peeRFaY7_7jinN
 
 mysql_port: 3306

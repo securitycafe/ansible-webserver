@@ -1,0 +1,26 @@
+nginx_version: 1.9.5
+nginx_installation_path: /usr/local/nginx
+nginx_port: 84
+
+nginx_configure_options:
+  - "--prefix={{ nginx_installation_path }}"
+  - --pid-path=/var/run/nginx.pid
+  - --user=nginx
+  - --with-threads
+  - --with-file-aio
+  - --without-http_auth_basic_module
+  - --without-http_autoindex_module
+  - --without-http_browser_module
+  - --without-http_charset_module
+  - --without-http_limit_conn_module
+  - --without-http_limit_req_module
+  - --without-http_memcached_module
+  - --without-http_referer_module
+  - --without-http_scgi_module
+  - --without-http_ssi_module
+  - --without-http_userid_module
+  - --without-http_uwsgi_module
+  - --with-http_realip_module
+  - --with-http_v2_module
+  - --with-http_ssl_module
+  - --with-http_stub_status_module

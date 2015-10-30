@@ -1,0 +1,49 @@
+ - name: set nginx service script
+   template:
+     src: service-nginx.j2
+     dest: /etc/init.d/nginx
+     owner: root
+     group: root
+     mode: 0755
+   tags:
+     - nginx
+     - scripts
+     - nginx1
+
+ - name: create vhosts directory
+   file:
+     path: "{{ nginx_installation_path }}/conf/vhosts"
+     state: directory
+     mode: 2775
+     owner: "{{ developer_user }}"
+     group: "{{ www_group }}"
+   tags:
+     - nginx
+     - configure
+
+ - name: place vhost file in vhosts directory
+   template:
+     src: example.com.conf.j2
+     dest: "{{ nginx_installation_path }}/conf/vhosts/{{ item.1 }}.conf"
+     owner: "{{ developer_user }}"
+     group: "{{ www_group }}"
+     mode: 0644
+   notify: restart nginx
+   with_indexed_items:
+     - "{{ websites }}"
+   tags:
+     - nginx
+     - configure
+
+
+- name: set nginx.conf file
+   template:
+     src: nginx.conf.j2
+     dest: "{{ httpd_installation_path }}/conf/httpd.conf"
+     owner: "{{ httpd_user }}"
+     group: "{{ httpd_group }}"
+     mode: 0644
+   notify: restart httpd
+   tags:
+     - httpd
+     - configure

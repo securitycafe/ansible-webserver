@@ -22,13 +22,13 @@
     - developer
 
 
- - name: place readme.txt file with basic information about machine in user home directory
-   template:
-     src: readme.txt.j2
-     dest: "/home/{{ developer_user }}/readme.txt"
-     owner: "{{ developer_user }}"
-     group: "{{ developer_user }}"
-     mode: 0600
-   tags:
-    - developer
+# - name: place readme.txt file with basic information about machine in user home directory
+#   template:
+#     src: readme.txt.j2
+#     dest: "/home/{{ developer_user }}/readme.txt"
+#     owner: "{{ developer_user }}"
+#     group: "{{ developer_user }}"
+#     mode: 0600
+#   tags:
+#    - developer
    

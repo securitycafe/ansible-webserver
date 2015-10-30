@@ -7,7 +7,7 @@ varnish_fix_directory: "{{ build_directory }}/varnish"
 varnish_nfiles: 131072
 varnish_log_size: 82000
 varnish_vcl_file: /etc/varnish/default.vcl
-varnish_port: 80
+varnish_port: 6081
 varnish_min_threads: 50
 varnish_max_threads: 1000
 varnish_thread_timeout: 120
